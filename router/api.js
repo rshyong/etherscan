@@ -3,8 +3,8 @@
 const api = require('express').Router();
 const apiMiddleware = require('../middleware/api');
 
-api.get('/',
-  apiMiddleware.test,
+api.post('/',
+  apiMiddleware.queryEtherscan,
   apiMiddleware.sendResponse);
 
 module.exports = api;
