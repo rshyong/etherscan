@@ -11,7 +11,7 @@ api.post('/queryEtherscan',
   apiMiddleware.saveAddress,
   apiMiddleware.sendResponse);
 
-/* Query all transaction based on provided params */
+/* Return back selected transaction based on provided params */
 api.post('/getTransactions',
   apiMiddleware.getTransactions,
   apiMiddleware.formatTransactions,
