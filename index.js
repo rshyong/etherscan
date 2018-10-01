@@ -2,6 +2,7 @@
 
 require('dotenv').config();
 require('./startup/logger.js');
+require('./startup/mongoose.js');
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');

@@ -2,6 +2,7 @@
 
 const fetch = require('node-fetch');
 const logger = require('../startup/logger.js');
+const mongoose = require('../startup/mongoose.js');
 
 function checkAddress(req, res, next) {
   if (req.body && !req.body.address) return res.status(400).send('Please provide an ethereum address');
@@ -46,6 +47,15 @@ async function getAddressBalance(req, res, next) {
   }
 }
 
+async function saveToAddress(req, res, next) {
+  let Address = mongoose.Address;
+  let test = new Address({ address: 'hi', });
+  test.save(function (err, fluffy) {
+    if (err) return console.error(err);
+    return next();
+  });
+}
+
 function sendResponse(req, res) {
   req.data = req.data || {};
   res.status(200).send(req.data);
@@ -55,5 +65,6 @@ module.exports = {
   checkAddress,
   getTransactionList,
   getAddressBalance,
+  saveToAddress,
   sendResponse,
 }
