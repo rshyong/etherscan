@@ -1,7 +1,9 @@
 'use strict';
 
 require('dotenv').config();
+// startup winston logger
 require('./startup/logger.js');
+// connect to mongodb and load schemas
 require('./startup/mongoose.js');
 const express = require('express');
 const app = express();

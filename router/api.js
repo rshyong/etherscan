@@ -3,11 +3,25 @@
 const api = require('express').Router();
 const apiMiddleware = require('../middleware/api');
 
-api.post('/',
+/* Query etherscan for transaction list and account balance */
+api.post('/queryEtherscan',
   apiMiddleware.checkAddress,
-  apiMiddleware.getTransactionList,
-  apiMiddleware.getAddressBalance,
+  apiMiddleware.queryForTransactionList,
+  apiMiddleware.queryForAddressBalance,
   apiMiddleware.saveAddress,
+  apiMiddleware.sendResponse);
+
+/* Query all transaction based on provided params */
+api.post('/getTransactions',
+  apiMiddleware.getTransactions,
+  apiMiddleware.formatTransactions,
+  apiMiddleware.queryTransactions,
+  apiMiddleware.sendResponse);
+
+/* Get address balances and other info */
+api.post('/getAddressBalances',
+  apiMiddleware.getAllAddresses,
+  apiMiddleware.formatAddressBalances,
   apiMiddleware.sendResponse);
 
 module.exports = api;

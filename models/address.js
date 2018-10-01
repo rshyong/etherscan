@@ -6,6 +6,7 @@ const ObjectId = Schema.ObjectId;
 
 const schema = new mongoose.Schema({
   id: ObjectId,
+  date: Date,
   address: String,
   transactions: [Schema.Types.Mixed, ],
   balance: Number,
