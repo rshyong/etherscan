@@ -154,21 +154,21 @@ function queryTransactions(req, res, next) {
   req.body = req.body || {};
   req.data.transactions = req.data.transactions.filter(i => {
     let bool = true;
-    if (req.body.minTime && req.body.maxTime) { // check for transaction done between certain dates
+    if (req.body.minTime !== undefined && req.body.maxTime !== undefined) { // check for transaction done between certain dates
       let minTime = new Date(req.body.minTime).getTime() / 1000; // in seconds since block timestamps are in seconds
       let maxTime = new Date(req.body.maxTime).getTime() / 1000; // in seconds since block timestamps are in seconds
       bool = bool && i.timeStamp >= minTime && i.timeStamp <= maxTime;
     }
-    if (req.body.minGasPrice && req.body.maxGasPrice) { // when combined with minTime and maxTime, can check to see how gasPrices fluctuate
+    if (req.body.minGasPrice !== undefined && req.body.maxGasPrice !== undefined) { // when combined with minTime and maxTime, can check to see how gasPrices fluctuate
       bool = bool && i.gasPrice >= req.body.minGasPrice && i.gasPrice <= req.body.maxGasPrice;
     }
-    if (req.body.from) { // in case you want to see all transactions originating from a given address
+    if (req.body.from !== undefined) { // in case you want to see all transactions originating from a given address
       bool = bool && i.from === req.body.from;
     }
-    if (req.body.to) { // in case you want to see all transactions going to a given address
+    if (req.body.to !== undefined) { // in case you want to see all transactions going to a given address
       bool = bool && i.to === req.body.to;
     }
-    if (req.body.isError) { //0 is Pass and 1 is Error; Can see which transactions failed
+    if (req.body.isError !== undefined) { //0 is Pass and 1 is Error; Can see which transactions failed
       bool = bool && i.isError === req.body.isError;
     }
     return bool;
