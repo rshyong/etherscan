@@ -2,7 +2,8 @@
 
 const fetch = require('node-fetch');
 
-async function queryEtherscan(req, res, next) {
+async function getTransactionList(req, res, next) {
+  req.data = req.data || {};
   if (req.body && !req.body.address) return res.status(400).send('Please provide an ethereum address');
   let { address, startblock, endblock, } = req.body;
   let api_key = process.env.API_KEY;
@@ -11,7 +12,19 @@ async function queryEtherscan(req, res, next) {
   let url = `http://api.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=${startblock}&endblock=${endblock}&sort=asc&apikey=${api_key}`;
   let response = await fetch(url);
   response = await response.json();
-  req.data = response.result;
+  req.data.txlist = response.result;
+  return next();
+}
+
+async function getAddressBalance(req, res, next) {
+  req.data = req.data || {};
+  if (req.body && !req.body.address) return res.status(400).send('Please provide an ethereum address');
+  let { address, } = req.body;
+  let api_key = process.env.API_KEY;
+  let url = `https://api.etherscan.io/api?module=account&action=balance&address=${address}&tag=latest&apikey=${api_key}`;
+  let response = await fetch(url);
+  response = await response.json();
+  req.data.balance = response.result;
   return next();
 }
 
@@ -21,6 +34,7 @@ function sendResponse(req, res) {
 }
 
 module.exports = {
-  queryEtherscan,
+  getTransactionList,
+  getAddressBalance,
   sendResponse,
 }
