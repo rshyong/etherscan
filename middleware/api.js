@@ -3,10 +3,14 @@
 const fetch = require('node-fetch');
 const logger = require('../startup/logger.js');
 
+function checkAddress(req, res, next) {
+  if (req.body && !req.body.address) return res.status(400).send('Please provide an ethereum address');
+  else return next();
+}
+
 async function getTransactionList(req, res, next) {
   req.data = req.data || {};
   try {
-    if (req.body && !req.body.address) return res.status(400).send('Please provide an ethereum address');
     let { address, startblock, endblock, } = req.body;
     let api_key = process.env.API_KEY;
     if (!startblock) startblock = 0;
@@ -27,7 +31,6 @@ async function getTransactionList(req, res, next) {
 async function getAddressBalance(req, res, next) {
   req.data = req.data || {};
   try {
-    if (req.body && !req.body.address) return res.status(400).send('Please provide an ethereum address');
     let { address, } = req.body;
     let api_key = process.env.API_KEY;
     let url = `https://api.etherscan.io/api?module=account&action=balance&address=${address}&tag=latest&apikey=${api_key}`;
@@ -49,6 +52,7 @@ function sendResponse(req, res) {
 }
 
 module.exports = {
+  checkAddress,
   getTransactionList,
   getAddressBalance,
   sendResponse,
