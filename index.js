@@ -1,24 +1,22 @@
 'use strict';
 
 require('dotenv').config();
+require('./startup/logger.js');
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const router = require('./router');
-const api = router.api;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use('/api', api);
-
-app.get('/', function (req, res) {
-  res.send('<h1>Hello World!</h1>');
+Object.keys(router).forEach(route => {
+  app.use(`/${route}`, router[ route ]);
 });
 
 // send 404 if no routes matched
 app.use((req, res) => {
-  res.status(404).end();
+  res.status(404).send('Endpoint does not exist');
 });
 
 app.listen(3000, () => {
