@@ -7,7 +7,7 @@ api.post('/',
   apiMiddleware.checkAddress,
   apiMiddleware.getTransactionList,
   apiMiddleware.getAddressBalance,
-  apiMiddleware.saveToAddress,
+  apiMiddleware.saveAddress,
   apiMiddleware.sendResponse);
 
 module.exports = api;

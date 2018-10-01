@@ -37,7 +37,7 @@ async function getAddressBalance(req, res, next) {
     let url = `https://api.etherscan.io/api?module=account&action=balance&address=${address}&tag=latest&apikey=${api_key}`;
     let response = await fetch(url);
     response = await response.json();
-    req.data.balance = response.result;
+    req.data.balance = Number(response.result) / Math.pow(10, 18);
     return next();
   } catch (err) {
     err = err.toString ? err.toString() : err;
@@ -47,13 +47,18 @@ async function getAddressBalance(req, res, next) {
   }
 }
 
-async function saveToAddress(req, res, next) {
-  let Address = mongoose.Address;
-  let test = new Address({ address: 'hi', });
-  test.save(function (err, fluffy) {
-    if (err) return console.error(err);
+async function saveAddress(req, res, next) {
+  req.data = req.data || {};
+  try {
+    let Address = mongoose.Address;
+    await Address.create({ address: req.body.address, transactions: req.data.txlist, balance: req.data.balance, });
     return next();
-  });
+  } catch (err) {
+    err = err.toString ? err.toString() : err;
+    let message = `Unable to save address info to mongodb: ${err}`;
+    logger.error(message);
+    return next(err);
+  }
 }
 
 function sendResponse(req, res) {
@@ -65,6 +70,6 @@ module.exports = {
   checkAddress,
   getTransactionList,
   getAddressBalance,
-  saveToAddress,
+  saveAddress,
   sendResponse,
 }
