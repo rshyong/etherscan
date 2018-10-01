@@ -2,7 +2,7 @@
 
 const fetch = require('node-fetch');
 const logger = require('../startup/logger.js');
-const mongoose = require('../startup/mongoose.js');
+const mongoose = process.env.npm_lifecycle_event === 'start' ? require('../startup/mongoose.js') : null;
 
 /**
  * Check to see if address was provided in req.body
