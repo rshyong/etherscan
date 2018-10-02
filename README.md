@@ -1,3 +1,5 @@
+[![Coverage Status](https://coveralls.io/repos/github/rshyong/etherscan/badge.svg?branch=master)](https://coveralls.io/github/rshyong/etherscan?branch=master)
+
 # Etherscan
 
 ## Overview
