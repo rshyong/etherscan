@@ -19,6 +19,9 @@ Returns a list of transactions that matches provided parameters on req.body. Acc
 ### /api/getAddressBalances
 Returns stored address balances by ETH address. Also includes date pulled from Etherscan as well as numTransactions.
 
+## JSDocs
+[Link to JSDocs](https://rshyong.github.io/etherscan/)
+
 ## Usage
 
 To start the app, make sure an instance of mongodb is running, and then run:
