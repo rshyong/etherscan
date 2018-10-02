@@ -9,10 +9,7 @@ db.once('open', function() {
   logger.silly('Connected to mongoose db');
 });
 const models = require('../models');
-let mongooseModel = {};
 Object.keys(models).forEach(model => {
   let name = model[ 0 ].toUpperCase() + model.slice(1);
-  mongooseModel[ name ] = mongoose.model(name, models[ model ]);
+  mongoose[ name ] = mongoose.model(name, models[ model ]);
 });
-
-module.exports = mongooseModel;
