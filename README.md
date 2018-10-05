@@ -28,6 +28,20 @@ To start the app, make sure an instance of mongodb is running, and then run:
 
 ```npm start```
 
+## Curl Examples
+
+To make a curl request to /api/queryEtherscan:
+
+```curl -i -H "Content-Type: application/json" -X POST -d '{"address":"0xB8196f7A39D4886321082BbB113be23D8a0eE9c8"}' http://localhost:3000/api/queryEtherscan```
+
+To make a curl request to /api/getTransactions with search parameters:
+
+```curl -i -H "Content-Type: application/json" -X POST -d '{"minGasPrice":"4000000000", "maxGasPrice":"5000000000"}' http://localhost:3000/api/getTransactions```
+
+To make a curl request to /api/getAddressBalances:
+
+```curl -i -X POST  http://localhost:3000/api/getAddressBalances```
+
 ## Testing the App
 
 To test the app, run:
